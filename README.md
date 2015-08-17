@@ -2,18 +2,18 @@
 
 Set of Python codes demonstrating the following:
 
-retrieve from database;
+retrieve from Excel database;
 
-filter and retain relevant data according to "cleaning rules";
+filter and retain relevant data according to "Cleaning Rules";
 
 update data in MySQL database;
 
-create metadata cluster objects for indexation.
+create metadata cluster objects for indexation in Solr.
 
 
-Codes in directories 'update' and 'clean-and-cluster' are no longer maintained 
-and are for demonstration purposes only.  Please read the README files in 
-directories for descriptions of the Python scripts.
+These codes in directories 'update' and 'clean-and-cluster' are for 
+demonstration purposes only.  Please read the README files in directories for 
+descriptions of the Python scripts.
 
 
 

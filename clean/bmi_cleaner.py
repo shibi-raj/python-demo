@@ -49,7 +49,8 @@ indic_name = [
     "Exchange rate","Expenditure scenario including governement spending","Manpower fit For military services",\
     "Other, US$mn ASSETS","LIABILITIES: Other, US$mn","global average" 
 ]
-#_____________________________________________________
+
+
 
 # Setup
 
@@ -65,7 +66,8 @@ terms         = [ t.lower() for t  in terms ]
 
 all_excl = OP_Handler( 'excluded/', 'main_file' )
 keep     = OP_Handler( './'       , 'keep'      )
-#_____________________________________________________
+
+
 
 # Cleaning
 
@@ -75,7 +77,8 @@ for ar in all_records:
     print ar
 
 for i,  item  in enumerate(terms):
-    f.append( OP_Handler('excluded/',item) )  # each title has its own file
+    # Each title has its own file
+    f.append( OP_Handler('excluded/',item) )  
     remove =  []
     for rec in all_records:
         if  item in  rec[-1]:
@@ -85,7 +88,8 @@ for i,  item  in enumerate(terms):
     all_records = [ it for it in all_records if it[0] not in remove ]
     print item, len(all_records), time.time() - start_time
 
-#  treat titles with same meaning but just in different units
+
+#  Treat titles with same meaning but just in different units
 print 'dupli titles'
 remove      =   dupli_titles( 'bn bbl'     , 'mn bbl', all_records ) \
               + dupli_titles( 'tcm'        , 'bcm'   , all_records ) \
@@ -93,20 +97,24 @@ remove      =   dupli_titles( 'bn bbl'     , 'mn bbl', all_records ) \
 all_records = [ it for it in all_records if it[0] not in remove ]
 print time.time() - start_time
 
-#  treat special currencies
+
+# Treat special currencies
 print 'spec_currency'
 remove      = spec_currency(all_records)
 all_records = [ it for it in all_records if it[0] not in remove ]
 print time.time() - start_time
 
-#  treat mention of 'europe'
+
+# Treat mention of 'europe'
 print 'europe'
 remove      = europe(all_records)
 all_records = [ it for it in all_records if it[0] not in remove ]
 print time.time() - start_time
 
+
 print 'final count of records     ', len( all_records )
-#_____________________________________________________
+
+
 
 # Clean up
 
