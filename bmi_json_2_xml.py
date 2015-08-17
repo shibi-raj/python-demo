@@ -3,17 +3,14 @@
 class BreakIt(Exception): pass
 
 
-
-
 import os
 import json
 from   bisect import *
 
 
-
-
 rd_json = '/home/ ... json'
 rd_xml  = '/home/ ... /xml'
+
 
 class solrGroupTransfer():
 
