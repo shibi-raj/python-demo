@@ -99,7 +99,7 @@ def bmi_update():
                     bmi  = BMI_Info(row)       
                     if bmi.title:  count_all_titles += 1
 
-                    # Accept or reject title
+                    
                     if good_title(bmi):        
 
                         count_good_titles += 1
