@@ -15,9 +15,9 @@ rd_xml  = '/home/ ... /xml'
 class solrGroupTransfer():
 
     def __init__(self,dataset):
-        self.group_fields = ["group_id", "country", "type",    "industry"]
-        self.doc_fields   = ["id_chart", "title",   "country", "seg",     "last_data"]
-        self.get_fields   = ["country", "industry", "id_chart", "title", "seg", "last_data"]
+        self.group_fields = ("group_id", "country", "type",    "industry")
+        self.doc_fields   = ("id_chart", "title",   "country", "seg",     "last_data")
+        self.get_fields   = ("country", "industry", "id_chart", "title", "seg", "last_data")
         self.d            =   dict( (x,"") for x in self.get_fields ) 
 
     def getFields(self):
