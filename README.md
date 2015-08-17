@@ -8,7 +8,7 @@ filter and retain relevant data according to "cleaning rules";
 
 update data in MySQL database;
 
-cluster metadata into objects for indexation.
+create metadata cluster objects for indexation.
 
 
 Codes in directories 'update' and 'clean-and-cluster' are no longer maintained 
