@@ -1,4 +1,7 @@
+
+
 class BreakIt(Exception): pass
+
 
 
 
@@ -6,8 +9,11 @@ import os
 import json
 from   bisect import *
 
-rd_json = '/home/srarlk/data/bmi/rdBMI/json'
-rd_xml  = '/home/srarlk/data/bmi/rdBMI/xml'
+
+
+
+rd_json = '/home/ ... json'
+rd_xml  = '/home/ ... /xml'
 
 class solrGroupTransfer():
 
@@ -41,6 +47,7 @@ def setData(number):
     data = json.load(rd_data)
     rd_data.close()
     return data['hits']['hits'][0]['_source']['dataset']
+
 
 
 
@@ -145,7 +152,7 @@ if __name__ == '__main__':
 
     sets = range(1000,2000)
 
-    rd_xml = '/home/srarlk/data/bmi/rdBMI/'
+    rd_xml = '/home/ ... bmi/rdBMI/'
     fname  = 'monfichier.xml'
 
     y = solrInput(rd_xml,fname)
@@ -157,7 +164,6 @@ if __name__ == '__main__':
         
     y.tree.write('outTree.xml')
 
-    """
     try:
         y.tree.write('outTree.xml')
     except TypeError as te:
@@ -165,7 +171,6 @@ if __name__ == '__main__':
         print logging.info(te)
         print logging.warning(te)
         print logging.error(te)
-    """
         
 
 
