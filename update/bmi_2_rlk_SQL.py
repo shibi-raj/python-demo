@@ -26,14 +26,12 @@ class Timer:
 
 def load_bmi():
     """Load BMI Database"""
-    folder = '/home/srarlk/data/bmi/'
-    #folder = '/home/srarlk/dev/repos/bmi-update/'
+    folder = '/home/ ... /bmi/'
     bmi_files = sys.argv[1:]
     wbs = []
     for bf in bmi_files:  
         bmi_db = folder + bf
         wbs.append( [load_workbook( filename=(bmi_db), use_iterators=True, data_only=True ), bf] )
-    #print wbs
     return wbs
 
 
@@ -57,7 +55,7 @@ def get_header_line(row):
 def bmi_update():
     """Main BMI Update function"""
     
-    """Set up"""
+    # Set up
     chart      = "chart1"
     data_table = "chart_data1"
 
@@ -68,7 +66,6 @@ def bmi_update():
         print "Current workbook: ", wb[1]
 
         sheet_names = wb[0].get_sheet_names()
-        #sheet_names = ['GDP']
 
         kill_titles = []
     
@@ -94,7 +91,7 @@ def bmi_update():
 
                     db = open_conn()
     
-                    #Get time sequence from header; data rows start at next iteration.
+                    # Get time sequence from header; data rows start at next iteration.
                     if  not time_seq: 
                         time_seq  = get_header_line(row)
                     else:
@@ -102,28 +99,35 @@ def bmi_update():
 
                     try:
                         if  data_rows:
-                            bmi  = BMI_Info(row, time_seq)       #  extract info from BMI row
+                            # Extract info from BMI row
+                            bmi  = BMI_Info(row, time_seq)       
     
-                            if  good_title(bmi) and not any(x == bmi.title for x in kill_titles): # accept/reject title
-                                bmi.fill_rest()        #  fill rest of data only for good titles
+                            # Accept or reject title
+                            if  good_title(bmi) and not any(x == bmi.title for x in kill_titles): 
+                                # Fill rest of data only for good titles
+                                bmi.fill_rest()        
                                 bmi.sa = wb[1]
 
                                 if bmi.data:
                                     title_in_db = sql_title_match(db,bmi.title,table=chart)
                                     id_chart    = ''
 
-                                    if not title_in_db:  #  title not already in MySQL DB, insert it
+                                    # Title not already in MySQL DB, insert it
+                                    if not title_in_db:  
                                         id_chart = insert_chart1(db,bmi,table=chart)
                                         insert_chart_data1(db, data_table, id_chart, bmi.data, bmi.time, bmi.source)
 
-                                    elif title_in_db:  #  title there and original
+                                    # Title there and original
+                                    elif title_in_db:  
                                         that_data = get_data(db, title_in_db[-1])
                                         data_sets_the_same = equiv_data(bmi.data, that_data[0])
 
                                         if (bmi.sa == title_in_db[1]) and not data_sets_the_same:
                                             kill_titles.append(bmi.title)                                    
-                                            delete_data(db, title_in_db[-1], table=chart)       # delete metadata
-                                            delete_data(db, title_in_db[-1], table=data_table)  # delete data
+                                            # Delete metadata
+                                            delete_data(db, title_in_db[-1], table=chart)       
+                                            # Delete data
+                                            delete_data(db, title_in_db[-1], table=data_table)  
 
                                         elif (bmi.sa != title_in_db[1]): 
                                             sql = "update %s set %s = '%s' where %s = %s" % (chart,'sa',bmi.sa,\
@@ -156,7 +160,6 @@ def bmi_update():
                 print "excluding sheet: ", sn
 
             print '\n'
-            #print 'kill titles                               ',kill_titles
             print '\n'
             print 'Discarded due to exceptions:     ',ex
             print 'Number without data for this DB: ',no_data
