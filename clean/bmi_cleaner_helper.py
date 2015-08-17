@@ -7,7 +7,7 @@ Handler for output files
 import re
 import time
 import itertools
-#from   bmi_cluster_helper import *
+
 
 class OP_Handler:
     def __init__(self,path,file_name):
@@ -33,10 +33,8 @@ class OP_Handler:
         print self.info
 
 
-#__________________________________________________________________
-#
-# Cleaner function
-#__________________________________________________________________
+
+# Cleaner functions
 
 
 def keep_title( title ):
@@ -49,7 +47,7 @@ def keep_title( title ):
 
 def cleaner( records = [] ):
     """ Input  - all records raw, uncleaned
-        Output - will soon return records kept after cleaning   """
+        Output - return records kept after cleaning   """
 
     remove     = []
     ids_titles = []
@@ -58,6 +56,7 @@ def cleaner( records = [] ):
         ids_titles.append( [ rec['id_chart'], rec['title_url'].lower() ] )
 
     start = time.time()
+
 
     # ___Applying cleaning rules___
 
@@ -87,7 +86,7 @@ def cleaner( records = [] ):
     rec_generator  = filter_list_generator(records)
     records        = filter(function, rec_generator)
 
-    return records # want this to return records
+    return records 
 
 
 def filter_list_generator( data = [] ):
@@ -107,10 +106,9 @@ def match( string, title ):
     return string
 
 
-#_____________________________________________________________________________
-#
+
 #  Supporting functions working on Titles
-#_____________________________________________________________________________
+
 
 def pivot(title):
     return title.split(',')[0].strip()
@@ -173,10 +171,10 @@ def binary_search(a, x, lo=0, hi=None):   # can't use a to specify default for h
     return (pos if pos != hi and a[pos] == x else -1) # don't walk off the end
 
 
-#_____________________________________________________________________________
-#
+
+
 #  Cleaning terms
-#_____________________________________________________________________________
+
 
 def cl_terms():
 
@@ -201,49 +199,7 @@ def cl_terms():
         "Government Expenditure","GDP Methodology","goods exports","goods imports","Lending rate",\
         "Exchange rate","Expenditure scenario including governement spending","Manpower fit For military services",\
         "global average" ]
-    #   "Other, US$mn ASSETS","LIABILITIES: Other, US$mn",
     
     return list( x.lower() for x in (indic_rep + indic_name) )
 
-
-
-
-#_____________________________________________________________________________
-#
-#  Code Not Currently Being Used
-#_____________________________________________________________________________
-
-"""
-def europe(all_records):
-    ''' Special function for handling 'Europe' - may be needed if excluding this zone. '''
-    rm_europe = []
-    for rec in all_records:
-        if   ( 'europe' == rec[1].split()[0] ):  rm_europe.append( rec[0] )
-        elif ( 'european car' in rec[1] )         :  pass
-        elif ( 'europe' in rec[1]) and (('in-bound' in rec[1]) or ('out-bound' in rec[1])):  pass
-        elif ( 'european union' in rec[1] ):  rm_europe.append( rec[0] )
-    return rm_europe
-"""
-
-
-"""
-def cleaner( ids_titles = [] ):
-"""
-""" Input  - list of form [ ['id', 'title'], ... ] raw, uncleaned sublists
-        Output - list of form [ ['id', 'title'], ... ] keep[] after cleaning   """
-"""
-
-    ids_titles_lower = [ [ x[0],x[1].lower() ] for  x in ids_titles ]
-
-    remove = []
-    for term in cl_terms():
-        remove  += [ it[0] for it in ids_titles_lower if match(term.lower(), it[1]) ]
-
-    # remove records
-    ids_titles = remove_records( ids_titles, remove )
-    ids_titles = remove_records( ids_titles, dupli_titles(  'units,  mn'  , 'units', ids_titles) )
-    ids_titles = remove_records( ids_titles, spec_currency(  ids_titles)  )
-
-    return ids_titles
-"""
 
