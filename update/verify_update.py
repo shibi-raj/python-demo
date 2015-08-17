@@ -3,7 +3,20 @@ from    openpyxl       import  load_workbook
 from    bmi_get_update import  *
 from    rlk_mysql      import  *
 import  logging
-#import collections
+
+
+
+
+class Timer:    
+    """Class for taking times"""
+    def __enter__(self):
+        self.start = time.clock()
+        return self
+
+    def __exit__(self, *args):
+        self.end = time.clock()
+        self.interval = self.end - self.start
+
 
 
 def open_bmi():
@@ -26,16 +39,6 @@ def get_header_line(row):
         for year in  row[5:]:
             time_seq.append(int(year[3]))
     return  time_seq
-
-class Timer:    
-    """Class for taking times"""
-    def __enter__(self):
-        self.start = time.clock()
-        return self
-
-    def __exit__(self, *args):
-        self.end = time.clock()
-        self.interval = self.end - self.start
 
 
 def compare(list1, list2):
@@ -60,10 +63,8 @@ def bmi_update():
 
     wb = open_bmi()
 
-    #sheet_names = wb.get_sheet_names()
     sheet_names  = ['Insurance']
 
-    #compare = lambda x, y: collections.Counter(x) == collections.Counter(y)
 
     for sn in sheet_names:
 
@@ -94,10 +95,12 @@ def bmi_update():
             try:
                 if  data_rows:
 
-                    bmi  = BMI_Info(row)       #  extract info from BMI row
+                    # Extract info from BMI row
+                    bmi  = BMI_Info(row)       
                     if bmi.title:  count_all_titles += 1
 
-                    if good_title(bmi):        #  accept or reject title
+                    # Accept or reject title
+                    if good_title(bmi):        
 
                         count_good_titles += 1
 

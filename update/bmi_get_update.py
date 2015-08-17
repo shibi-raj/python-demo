@@ -37,7 +37,6 @@ class BMI_Info():
         try:
             part = self.row[2][3].replace("'", "`")
             part = part.split(': ')
-            #for p in part: p.replace("'", "`")
             if   part  and  len(part) > 1:  
                  self.description = part[0]
                  part  =        part[1]  
@@ -50,12 +49,12 @@ class BMI_Info():
             full_string = ''
         return  self.make_uniform(full_string)
     
-    def get_source(self):  #  > data source
+    def get_source(self):  
         try:
             source = unicodedata.normalize('NFKD',self.row[3][3]).encode('ascii', 'ignore')
             source = source.replace("'", "`")
         except Exception, e:
-            source = ''#unicodedata.normalize('NFKD',self.row[3][3]).encode('ascii', 'ignore')
+            source = ''  #unicodedata.normalize('NFKD',self.row[3][3]).encode('ascii', 'ignore')
         if str(source) == '0':  source = 'BMI'
         return source
 

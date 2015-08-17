@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 
-"""Functions for SQL statement execution."""
+#  Functions for SQL statement execution.
 
 def sql_results(db, sql):  
     """Generic, reusable function for MySQL querying and returning the 
@@ -37,7 +37,7 @@ def sql_execute(db, sql):
 
 
 
-"""Related functions for matching BMI titles to those in the RLK database."""
+#  Related functions for matching BMI titles to those in the RLK database.
 
 def sql_title_match(db, title, table='chart1'):
     """Makes title query and returns [title, source, id_chart] of the match"""
@@ -62,7 +62,7 @@ def sql_split_title(title, table='chart1'):
 
 
 
-"""Functions for operations acting on the RLK database."""
+#  Functions for operations acting on the RLK database.
 
 def get_last_id(db, table='chart1', id_label='id_chart'):
     """Fetch highest id from table."""
@@ -113,7 +113,7 @@ def delete_data(db, id_chart, table="chart_data1"):
 
 
 
-"""Final numbers checks"""
+#  Final numbers checks
 
 def equiv_data(l1, l2):
     equiv = True
@@ -134,20 +134,6 @@ def get_data(db,id,table='chart_data1', field='dim_1_1'):
     return data
 
 
-
-"""
-def equiv_data(l1 = [], l2 = []):
-    equiv = True
-    if  len(l1) != len(l2):
-        equiv = False
-        print len(l1), len(l2)
-    else:
-        for v1, v2 in zip(l1,l2):
-            if  abs(v1-v2) > .1:
-                print v1, v2
-                equiv = False
-    return equiv
-"""
 
 
 class Sheet_Info:
