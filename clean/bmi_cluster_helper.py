@@ -1,7 +1,9 @@
-#  bmi_cluster_helper.py
-#
-#  Helper functions for BMI clustering of related files: 
-#      Country, Sector, Topics
+"""  bmi_cluster_helper.py
+
+  Helper functions for BMI clustering of related files: 
+      Country, Sector, Topics
+"""
+
 
 import ast
 import solr
@@ -14,12 +16,7 @@ from   bmi_cleaner_helper     import *
 s        =  solr.SolrConnection('http://85.31.219.96:7183/solr')
 
 
-
-
-#______________________________________________________________
-#
 #  Cluster Formatting Functions - Possibly temporary, up to Ben
-#______________________________________________________________
 
 
 def cat_top_tle(country, ind, records = []):
@@ -59,13 +56,6 @@ def cat_top_tle(country, ind, records = []):
                         for t in the_topic:
                             if t not in d_ctt[msd]:  d_ctt[msd][t] = [ r['title_url'] ]
                             else: d_ctt[msd][t].append(r[ 'title_url' ])
-    #print 'look here', d_ctt
-    #print
-    #for cat in d_ctt.iterkeys():
-    #    d_ctt[cat] = top_and_tle( d_ctt[cat] )
-    #print msd.upper()
-    #print d_ctt
-    #format_ctt(d_ctt)
     for cat in d_ctt.iterkeys():
         print  '\t', cat 
         for topic in d_ctt[cat].iterkeys():
@@ -141,7 +131,6 @@ def top_and_tle( records = [] ):
             d_tt['No Topic'].append(r['title_url'])
     return d_tt
 
-#______________________________________________________________
 
 
 def loc_topic_facet( id_ind, records ):
@@ -178,10 +167,9 @@ def out_segment_topics( ind_id_name, d = {} ):
         print k, d[k]
     print
 
-#________________________________________________
-#
+
+
 #  Input records
-#________________________________________________
 
 
 def get_condensed_records( file_name ):
@@ -208,10 +196,8 @@ def get_records( file_name, seq     = ['id_chart', 'title_url', 'id_industry']):
                     records.append( { k:line_dict[k] for k in seq if k in line_dict} )
     return records
         
-#__________________________________________________________________    
-#
-#  String manipulation functions
-#__________________________________________________________________    
+
+# String manipulation functions
 
 
 def str_to_dict( string = '' ):
@@ -229,10 +215,8 @@ def rm_list_underscores( ls = [] ):
     return ls
 
 
-#________________________________________________
-#
-#  Functions that fetching from the SOLR database
-#________________________________________________
+# Functions that fetching from the SOLR database
+
 
 def related_ids( country, id_ind, topics ):	
     """ Input:  country, industry id, and list of topics
@@ -240,7 +224,6 @@ def related_ids( country, id_ind, topics ):
 
     filter   =  "country:" +   country  + " AND "     + "id_industry:"   + id_ind
     response =  s.query(q='*', fq=filter,  rows="1000")
-    #response =  s.query(q='*', fq=filter,  rows="1000",  fields="title_url,id_chart,topic,country")
     d        =  {}
 
     for topic in topics:
@@ -249,7 +232,6 @@ def related_ids( country, id_ind, topics ):
             try:
                 if   topic  in     hit['topic']:
                    d[topic].append(hit['id_chart'])
-                   #print hit['country'], hit['id_industry'], hit['topic']
             except KeyError:
                 pass
     return d
@@ -309,56 +291,3 @@ def record_has_mult_topics( id_chart ):
             pass
     return id_chart
 
-
-#____________________________
-#
-#  Codes not presently in use
-#____________________________
-
-
-"""
-def get_records( file_name ):
-    records = []
-    function = lambda x: filter_get_records(x['title_url'].lower())
-    title_generator = get_rec_generator(file_name)
-    records = filter(function, title_generator)
-    return records
-
-def get_rec_generator(file_name):
-    seq     = ['id_chart', 'title_url', 'id_industry', 'industry', 'topic' ]
-    with open(file_name) as f:
-        for line in f:
-            if line.strip():
-                line_dict = str_to_dict(line.strip())
-                try:
-                    yield { k:line_dict[k] for k in seq }
-                except KeyError:
-                    pass
-
-def filter_get_records(title):
-    good_title = True
-    for term in cl_terms():
-        if term in title:  
-            good_title = False
-            break
-    return good_title    
-"""
-
-
-"""
-#_______________________________________________
-#bufsize=4096
-def delimited(file, delimiter='\n', bufsize=64):
-    buf = ''
-    while True:
-        newbuf = file.read(bufsize)
-        print newbuf
-        if not newbuf:
-            yield buf
-            return
-        buf += newbuf
-        lines = buf.split(delimiter)
-        for line in lines[:-1]:
-            yield line
-        buf = lines[-1]
-"""
