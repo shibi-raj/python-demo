@@ -11,10 +11,7 @@ Set of Python codes demonstrating the following:
     create metadata cluster objects for indexation in Solr.
 
 
-These codes in these directories are for 
-demonstration purposes only.  Please read the README files in directories for 
-descriptions of the Python scripts.
-
+The codes in these directories are for demonstration purposes only.  
 
 
 
