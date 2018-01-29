@@ -1,4 +1,4 @@
-# python-demo
+# RLK
 
 Set of Python codes demonstrating the following:
 
